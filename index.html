@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>Sauna P8</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div id="login-screen" class="screen">
+    <div class="login-box">
+      <h1 class="logo">SAUNA P8</h1>
+      <p class="tagline">Thế giới avatar tự do</p>
+      <div class="avatar-preview" id="avatar-preview"></div>
+      <label class="label">Biệt danh</label>
+      <input type="text" id="nickname-input" maxlength="16" placeholder="Nhập tên của bạn..." autocomplete="off" />
+      <label class="label">Vai trò</label>
+      <div class="role-pick">
+        <button type="button" class="role-btn active" data-role="top">🔵 TOP</button>
+        <button type="button" class="role-btn" data-role="bot">🩷 BOT</button>
+      </div>
+      <div class="avatar-options">
+        <div class="opt-row"><span>Màu da</span><div class="color-picks" id="skin-picks"></div></div>
+        <div class="opt-row"><span>Tóc</span>
+          <select id="hair-style"><option value="short">Ngắn</option><option value="long">Dài</option><option value="curly">Xoăn</option><option value="bald">Hói</option><option value="ponytail">Đuôi ngựa</option></select>
+          <div class="color-picks" id="hair-picks"></div>
+        </div>
+        <div class="opt-row"><span>Áo/Khăn</span>
+          <select id="top-style"><option value="towel">Khăn tắm</option><option value="shirt">Áo</option><option value="hoodie">Hoodie</option><option value="none">Không</option></select>
+          <div class="color-picks" id="top-picks"></div>
+        </div>
+        <div class="opt-row"><span>Quần</span>
+          <select id="bottom-style"><option value="shorts">Quần ngắn</option><option value="pants">Quần dài</option><option value="towel">Khăn</option><option value="none">Không</option></select>
+          <div class="color-picks" id="bottom-picks"></div>
+        </div>
+      </div>
+      <button id="btn-join" class="btn primary">Vào Thế Giới</button>
+      <p class="hint">Chat riêng • Rủ nhà nghỉ • Có bot mỗi phòng</p>
+    </div>
+  </div>
+
+  <div id="game-screen" class="screen hidden">
+    <canvas id="game-canvas"></canvas>
+    <div id="hud">
+      <div class="hud-top">
+        <div class="hud-left">
+          <span id="my-name"></span>
+          <span id="room-name">Sảnh Chính</span>
+          <div id="hp-bar-wrap"><div id="hp-bar"></div></div>
+          <span id="money-display">💰 500.000đ</span>
+        </div>
+        <div class="hud-right">
+          <span id="online-count">Online: 0</span>
+          <span id="room-count"></span>
+        </div>
+      </div>
+      <div id="room-nav"></div>
+    </div>
+
+    <div id="mobile-controls">
+      <div id="joystick-zone"><div id="joystick-base"><div id="joystick-knob"></div></div></div>
+      <div id="action-btns">
+        <button id="btn-social" class="action-btn">💕</button>
+        <button id="btn-emote" class="action-btn">😊</button>
+        <button id="btn-chat" class="action-btn">💬</button>
+        <button id="btn-pm" class="action-btn">📩</button>
+        <button id="btn-attack" class="action-btn attack">⚔️</button>
+        <button id="btn-shop" class="action-btn">🛒</button>
+      </div>
+    </div>
+
+    <div id="social-menu" class="panel hidden">
+      <button class="social-item" data-type="hug">🤗 Ôm</button>
+      <button class="social-item" data-type="kiss">😘 Hôn</button>
+      <button class="social-item" data-type="sleep">😴 Ngủ cùng</button>
+      <button class="social-item" data-type="pat">🤚 Vỗ về</button>
+      <button class="social-item" data-type="highfive">🙏 Đập tay</button>
+      <button class="social-item" data-type="dance">💃 Nhảy</button>
+      <button class="social-item" data-type="wave">👋 Vẫy tay</button>
+      <button class="social-item" data-type="motel">🏨 Rủ nhà nghỉ</button>
+      <button class="social-item" data-type="invite-bath">🛁 Rủ bot tắm</button>
+      <button class="social-item" data-type="invite-sauna">♨️ Rủ bot xông hơi</button>
+    </div>
+
+    <div id="emote-menu" class="panel hidden">
+      <button class="emote-item" data-emote="👋">👋</button>
+      <button class="emote-item" data-emote="😂">😂</button>
+      <button class="emote-item" data-emote="❤️">❤️</button>
+      <button class="emote-item" data-emote="😎">😎</button>
+      <button class="emote-item" data-emote="👍">👍</button>
+      <button class="emote-item" data-emote="👏">👏</button>
+      <button class="emote-item" data-emote="🙌">🙌</button>
+      <button class="emote-item" data-emote="😴">😴</button>
+      <button class="emote-item" data-emote="💃">💃</button>
+      <button class="emote-item" data-emote="🔥">🔥</button>
+      <button class="emote-item" data-emote="🥺">🥺</button>
+      <button class="emote-item" data-emote="💢">💢</button>
+    </div>
+
+    <div id="shop-panel" class="panel hidden">
+      <p class="shop-title">🛒 Quầy Lễ Tân</p>
+      <button class="shop-item" data-item="ticket">🎫 Vé vào cửa — 150.000đ</button>
+      <button class="shop-item" data-item="popper">💨 Popper Gel — 80.000đ</button>
+      <button class="shop-item" data-item="bcs">📦 BCS — 30.000đ</button>
+      <button id="btn-close-shop" class="btn small ghost">Đóng</button>
+    </div>
+
+    <div id="pm-panel" class="panel hidden">
+      <p class="shop-title">📩 Chat riêng</p>
+      <p id="pm-target" style="font-size:12px;color:#aaa;margin-bottom:8px">Chọn người chơi trước</p>
+      <input type="text" id="pm-input" maxlength="120" placeholder="Nhắn FB/Zalo hoặc gì đó..." />
+      <button id="btn-send-pm" class="btn small">Gửi riêng</button>
+      <button id="btn-close-pm" class="btn small ghost">Đóng</button>
+      <div id="pm-log"></div>
+    </div>
+
+    <div id="motel-modal" class="panel hidden">
+      <p class="shop-title">🏨 Lời mời Nhà Nghỉ</p>
+      <p id="motel-from-text"></p>
+      <button id="btn-accept-motel" class="btn small">Đồng ý đi</button>
+      <button id="btn-decline-motel" class="btn small ghost">Từ chối</button>
+    </div>
+
+    <div id="chat-bar" class="hidden">
+      <input type="text" id="chat-input" maxlength="100" placeholder="Nhập tin nhắn..." autocomplete="off" />
+      <button id="btn-send">Gửi</button>
+    </div>
+    <div id="chat-log"></div>
+
+    <div id="private-panel" class="panel hidden">
+      <p>Phòng riêng tư (2 người)</p>
+      <button id="btn-create-private" class="btn small">Tạo phòng riêng</button>
+      <input type="text" id="private-code" placeholder="Mã phòng..." maxlength="40" />
+      <button id="btn-join-private" class="btn small">Vào phòng</button>
+      <button id="btn-close-private" class="btn small ghost">Đóng</button>
+    </div>
+    <button id="btn-private" class="fab">🔒</button>
+  </div>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>
