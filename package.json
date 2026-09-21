@@ -1,0 +1,19 @@
+{
+  "name": "sauna-p8",
+  "version": "1.0.0",
+  "description": "Sauna P8 - Realtime multiplayer social avatar game",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.0",
+    "socket.io": "^4.7.5"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": ["multiplayer", "socket.io", "game", "sauna"],
+  "author": "Sauna P8",
+  "license": "MIT"
+}
